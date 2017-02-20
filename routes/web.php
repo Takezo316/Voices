@@ -18,3 +18,11 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
+
+
+Route::get('/companies', 'CompaniesController@index');
+Route::get('/companies/create', 'CompaniesController@create');
+Route::post('/companies', 'CompaniesController@store');
+Route::get('/companies/{company}', 'CompaniesController@show');
+
+
