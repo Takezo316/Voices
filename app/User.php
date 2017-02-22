@@ -26,4 +26,16 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public  function companies(){
+
+        return $this->hasMany(Company::class);
+
+    }
+
+    public function company_create(Company $company){
+
+        $this->companies()->save($company);
+
+    }
 }

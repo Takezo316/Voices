@@ -20,8 +20,6 @@ class CreateContestsTable extends Migration
             $table->text('body');
             $table->dateTime('date_ini');
             $table->dateTime('date_end');
-            $table->date('published_at');
-            $table->integer('user_id');
             $table->integer('company_id');
             $table->timestamps();
         });
