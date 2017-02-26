@@ -14,5 +14,9 @@ class Contest extends Model
 
     }
 
+    public function files(){
 
+        return $this->hasMany(File::class);
+
+    }
 }

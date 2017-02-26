@@ -11,25 +11,20 @@ class CompaniesController extends Controller
 {
     public function __construct()
     {
-
         $this->middleware('auth')->except(['index','show']);
-
     }
+
 
     public function index()
     {
-
         $companies = Company::latest()->get();
         return view('companies.index', compact('companies'));
-
     }
 
 
     public function create()
     {
-
         return view('companies.create');
-
     }
 
 
@@ -42,20 +37,18 @@ class CompaniesController extends Controller
 
         auth()->user()->company_create(
 
-            new Company(request(['name','about']))
+            new Company(request()->all())
 
         );
 
         return redirect('/companies');
-        
     }
 
 
-    public function show(Company $company)
+    public function show(Company $company, $slug)
     {
-
+        $company = $company->where('slug', $slug)->first();
         return view('companies.show', compact('company'));
-
     }
 
 

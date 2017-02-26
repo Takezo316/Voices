@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 use App\Contest;
@@ -10,6 +10,10 @@ use App\Company;
 
 class ContestsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth')->except(['index','show']);
+    }
 
     public function index()
     {
@@ -19,7 +23,8 @@ class ContestsController extends Controller
 
 
     public function create($companyId)
-    {return view('contests.create')->with('company_id', $companyId);
+    {
+        return view('contests.create')->with('company_id', $companyId);
     }
 
 
@@ -27,20 +32,29 @@ class ContestsController extends Controller
     {
         $this->validate(request(),[
             'title' => 'required',
-            'body' => 'required'
+            'body' => 'required',
+            'slug' => 'required'
         ]);
 
+        $company = DB::table('companies')->where('slug', request('company_id'))->value('id');
 
-        Contest::create(request(['title','body','slug', 'company_id', 'date_ini', 'date_end', 'published_at', 'user_id']));
+        Contest::create([
+            'title' => request('title'),
+            'body' => request('body'),
+            'slug' => request('slug'),
+            'company_id' => $company,
+            'date_ini' => request('date_ini'),
+            'date_end' => request('date_end')
+        ]);
 
         return redirect()->route('company', ['id' => request('company_id')]);
     }
 
 
-    public function show(Contests $contest)
+    public function show($slugc, $slug)
     {
+        $contest = Contest::where('slug', $slug)->first();
         return view('contests.show', compact('contest'));
-
     }
 
 

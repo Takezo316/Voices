@@ -17,17 +17,21 @@ Route::get('/', function () {
 
 Auth::routes();
 
-//Route::get('/home', 'HomeController@index');
+Route::get('/home', 'HomeController@index');
 
 
 Route::get('/companies', 'CompaniesController@index');
 Route::get('/companies/create', 'CompaniesController@create');
 Route::post('/companies', 'CompaniesController@store');
-Route::get('/companies/{company}', array('as' => 'company', 'uses' => 'CompaniesController@show'));
+Route::get('/companies/{slug}', array('as' => 'company', 'uses' => 'CompaniesController@show'));
 
-Route::get('/companies/{company}/contests', 'ContestsController@index');
+
+Route::get('/companies/{company}/contests', array('as' => 'contests_list','uses'=>'ContestsController@index'));
 Route::get('/companies/{company}/contests/create', array('as' => 'contest_create', function($companyId){return $companyId;}, 'uses'=>'ContestsController@create'));
 Route::post('/contests', 'ContestsController@store');
-Route::get('/companies/{company}/contests/{contest}', array('as' => 'contest_view', function($companyId, $contestId){return array($companyId,$contestId);}, 'uses' => 'ContestsController@show'));
+Route::get('/companies/{company}/contests/{contest}', array('as' => 'contest_view', 'uses' => 'ContestsController@show'));
+
+
+Route::post('/files', 'FilesController@store');
 
 

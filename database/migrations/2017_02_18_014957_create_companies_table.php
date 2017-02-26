@@ -18,7 +18,6 @@ class CreateCompaniesTable extends Migration
             $table->string('name');
             $table->string('slug')->unique();
             $table->text('about');
-            $table->string('logo');
             $table->integer('user_id');
             $table->timestamps();
         });

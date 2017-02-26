@@ -7,11 +7,8 @@
         {{ csrf_field() }}
         <div class="form-group">
             <label>Nombre de la Empresa</label>
-            <input type="text" name="name" class="form-control">
-        </div>
-        <div class="form-group">
-            <label>Logo de la Empresa</label>
-            <input type="file" name="logo" class="form-control">
+            <input type="text" name="name" id="name" class="form-control">
+            <input type="hidden" name="slug" id="slug">
         </div>
         <div class="form-group">
             <label>Acerca de la Empresa</label>
@@ -22,5 +19,13 @@
         </div>
         @include('layouts.errors')
     </form>
+    <script>
+        $(document).ready(function() {
+            $('#name').change(function() {
+                $lowerc = $('#name').val();
+                $('#slug').val($lowerc.toLowerCase().replace(/ /g, "-"));
+            });
+        });
+    </script>
 
 @endsection
