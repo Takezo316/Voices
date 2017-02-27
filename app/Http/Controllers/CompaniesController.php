@@ -36,9 +36,7 @@ class CompaniesController extends Controller
         ]);
 
         auth()->user()->company_create(
-
             new Company(request()->all())
-
         );
 
         return redirect('/companies');
@@ -48,19 +46,25 @@ class CompaniesController extends Controller
     public function show(Company $company, $slug)
     {
         $company = $company->where('slug', $slug)->first();
+
         return view('companies.show', compact('company'));
     }
 
 
-    public function edit(Company $company)
+    public function edit(Company $company, $slug)
     {
-        //
+        $company = $company->where('slug', $slug)->first();
+
+        return view('companies.edit', compact('company'));
     }
 
 
-    public function update(Request $request, Company $company)
+    public function update(Request $request, Company $company, $slug)
     {
-        //
+        $company = $company->where('slug', $slug)->first();
+        $company->fill(request()->all())->save();
+
+        return view('companies.show', compact('company'));
     }
 
 

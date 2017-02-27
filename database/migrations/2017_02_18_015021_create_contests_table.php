@@ -18,8 +18,8 @@ class CreateContestsTable extends Migration
             $table->string('title');
             $table->string('slug')->unique();
             $table->text('body');
-            $table->dateTime('date_ini');
-            $table->dateTime('date_end');
+            $table->date('date_ini');
+            $table->date('date_end');
             $table->integer('company_id');
             $table->timestamps();
         });

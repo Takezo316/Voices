@@ -24,13 +24,16 @@ Route::get('/companies', 'CompaniesController@index');
 Route::get('/companies/create', 'CompaniesController@create');
 Route::post('/companies', 'CompaniesController@store');
 Route::get('/companies/{slug}', array('as' => 'company', 'uses' => 'CompaniesController@show'));
+Route::get('/companies/{slug}/edit', array('as' => 'company_edit', 'uses' => 'CompaniesController@edit'));
+ROute::patch('/companies/{slug}', 'CompaniesController@update');
 
 
 Route::get('/companies/{company}/contests', array('as' => 'contests_list','uses'=>'ContestsController@index'));
 Route::get('/companies/{company}/contests/create', array('as' => 'contest_create', function($companyId){return $companyId;}, 'uses'=>'ContestsController@create'));
 Route::post('/contests', 'ContestsController@store');
 Route::get('/companies/{company}/contests/{contest}', array('as' => 'contest_view', 'uses' => 'ContestsController@show'));
-
+Route::get('/contests/{slug}/edit', array('as' => 'contest_edit', 'uses' => 'ContestsController@edit'));
+ROute::patch('/contests/{slug}', 'ContestsController@update');
 
 Route::post('/files', 'FilesController@store');
 

@@ -2,6 +2,10 @@
 
 @section('content')
 
+    @if (Auth::guest())
+    @else
+        <a style="float: right;" class="btn btn-primary btn-sm" href="{{ route('company_edit', [$company->slug]) }}">Editar</a>
+    @endif
     <h1>Bienvenido a {{ $company->name }}</h1>
 
     <p>{!! $company->about !!}</p>

@@ -20,9 +20,12 @@ class FilesController extends Controller
         $contest = DB::table('contests')->where('slug', request('contest_id'))->value('id');
 
         $file = request('file');
-        $extension = $file->getClientOriginalExtension();
-        $fileName = bcrypt('file') . '.' . $extension;
-        $prcPath = 'uploads/processing';
+        $extensionOri = $file->getClientOriginalExtension();
+        $genName = bcrypt('file');
+        $fileName = $genName . '.' . $extensionOri;
+        $fileSave = $genName . '.mp3';
+        $prcPath = 'uploads';
+        $playPath = 'uploads/audio';
         $file->move($prcPath, $fileName);
 
         File::create([
@@ -31,8 +34,8 @@ class FilesController extends Controller
             'email' => request('email'),
             'title' => request('title'),
             'file_name' => $fileName,
-            'url_play' => $prcPath.'/'.$fileName,
-            'url_save' => $prcPath.'/'.$fileName,
+            'url_play' => $playPath.'/'.$fileSave,
+            'url_save' => $playPath.'/'.$fileSave,
             'contest_id' => $contest
         ]);
 

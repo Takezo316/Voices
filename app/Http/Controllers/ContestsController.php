@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 use App\Contest;
 use App\Company;
@@ -54,23 +55,31 @@ class ContestsController extends Controller
     public function show($slugc, $slug)
     {
         $contest = Contest::where('slug', $slug)->first();
+
         return view('contests.show', compact('contest'));
     }
 
 
-    public function edit(Contests $contests)
+    public function edit(Contest $contest, $slug)
     {
-        //
+        $contest = $contest->where('slug', $slug)->first();
+
+        return view('contests.edit', compact('contest'));
     }
 
 
-    public function update(Request $request, Contests $contests)
+    public function update(Request $request, Contest $contest, $slug)
     {
-        //
+        $contest = $contest->where('slug', $slug)->first();
+        //$companySlug = DB::table('companies')->where('id', request('company_id'))->value('slug');
+        $contest->fill($request->get()->all())->save();
+
+        //return redirect()->route('company', ['id' => $companySlug]);
+        return redirect('/home');
     }
 
 
-    public function destroy(Contests $contests)
+    public function destroy(Contest $contest)
     {
         //
     }
